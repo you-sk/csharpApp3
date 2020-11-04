@@ -17,8 +17,6 @@ namespace NL_SUMMARY_TOOL
         public Form1()
         {
             InitializeComponent();
-            //textBox1.Text = @"C:\Users\FIS1805\Desktop\NL_SUM\T_実績_総計20191022.xlsx";
-            //textBox2.Text = @"C:\Users\FIS1805\Desktop\NL_SUM\20191022（9：21）.xlsx";
 
         }
         /// <summary>
@@ -39,7 +37,7 @@ namespace NL_SUMMARY_TOOL
             ofd.Dispose();
         }
         /// <summary>
-        /// NLMAXボタン
+        /// ボタンclick
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -48,7 +46,7 @@ namespace NL_SUMMARY_TOOL
             var ofd = new OpenFileDialog
             {
                 Filter = "Excelファイル(*.xlsx)|*.xlsx|すべてのファイル(*.*)|*.*",
-                Title = "NLMAX出力ファイル(外注)を選択してください",
+                Title = "出力ファイル(外注)を選択してください",
                 InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)
             };
             //ダイアログ表示→OKならテキストボックス1へファイルパスをセット
@@ -75,7 +73,7 @@ namespace NL_SUMMARY_TOOL
             }
             if (!System.IO.File.Exists(textBox2.Text))
             {
-                MessageBox.Show("NLMAX出力ファイル(売上)がありません", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("出力ファイル(xx)がありません", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -84,7 +82,7 @@ namespace NL_SUMMARY_TOOL
             {
                 if (!System.IO.File.Exists(textBox3.Text))
                 {
-                    MessageBox.Show("NLMAX出力ファイル(外注)がありません", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("出力ファイル(zz)がありません", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 isSplitGaichu = true;
@@ -221,7 +219,7 @@ namespace NL_SUMMARY_TOOL
                     }
                     isDataFound = false;
 
-                    label1.Text = $"NLMAXデータ読み込み開始";
+                    label1.Text = $"データ読み込み開始";
                     label1.Update();
 
                     //テーブル作成
@@ -298,7 +296,7 @@ namespace NL_SUMMARY_TOOL
                                         cmd.ExecuteNonQuery();
                                         Console.WriteLine("INSERT:" + no);
                                         isDataFound = true;
-                                        label1.Text = $"NLMAXデータ(売上)読み込み中 {i}/{lastUsedRownum}";
+                                        label1.Text = $"データ(zz)読み込み中 {i}/{lastUsedRownum}";
                                         label1.Update();
                                     }
                                     ts.Commit();
@@ -307,14 +305,14 @@ namespace NL_SUMMARY_TOOL
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("NLMAXデータ(売上)の読み込みに失敗しました\nファイルを確認してください\n" + ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("データ(zz)の読み込みに失敗しました\nファイルを確認してください\n" + ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             label1.Text = "";
                             return;
                         }
                     }
                     if (!isDataFound)
                     {
-                        MessageBox.Show("NLMAXデータ(売上)が見つかりません", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("データ(zz)が見つかりません", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         label1.Text = "";
                         return;
                     }
@@ -370,7 +368,7 @@ namespace NL_SUMMARY_TOOL
                                             cmd.ExecuteNonQuery();
                                             Console.WriteLine("INSERT:" + no);
                                             isDataFound = true;
-                                            label1.Text = $"NLMAXデータ(外注)読み込み中 {i}/{lastUsedRownum}";
+                                            label1.Text = $"データ(xx)読み込み中 {i}/{lastUsedRownum}";
                                             label1.Update();
                                         }
                                         ts.Commit();
@@ -380,14 +378,14 @@ namespace NL_SUMMARY_TOOL
                             }
                             catch (Exception ex)
                             {
-                                MessageBox.Show("NLMAXデータ(外注)の読み込みに失敗しました\nファイルを確認してください\n" + ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("データ(zz)の読み込みに失敗しました\nファイルを確認してください\n" + ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 label1.Text = "";
                                 return;
                             }
                         }
                         if (!isDataFound)
                         {
-                            MessageBox.Show("NLMAXデータ(外注)が見つかりません", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("データ(xx)が見つかりません", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             label1.Text = "";
                             return;
                         }
@@ -470,12 +468,11 @@ namespace NL_SUMMARY_TOOL
             resiltWb.Style.Font.FontName = "ＭＳ ゴシック";
             //売上
             {
-                var worksheet = resiltWb.Worksheets.Add("売上金額");
+                var worksheet = resiltWb.Worksheets.Add("yyy");
                 string[] title = {
-                    "取引先","コストセンター",
-                    "現_取引先名","現_コストセンター名","現_金額合計",
-                    "新_取引先名","新_コストセンター名","新_金額合計",
-                    "差額(現-新)"
+                    "xxx","xxxx",
+                    "xxx","xxxx",
+					"dumy"
                 };
                 var c = 1;
                 var r = 1;
@@ -517,12 +514,11 @@ namespace NL_SUMMARY_TOOL
             }
 
             {
-                var worksheet = resiltWb.Worksheets.Add("外注費");
+                var worksheet = resiltWb.Worksheets.Add("xx");
                 string[] title = {
-                    "外注先","コストセンター",
-                    "現_外注先名","現_コストセンター名","現_金額合計",
-                    "新_外注先名","新_コストセンター名","新_金額合計",
-                    "差額(現-新)"
+                    "xxx","xxxx",
+                    "xxx","xxxx",
+					"dumy"
                 };
                 var c = 1;
                 var r = 1;
@@ -604,7 +600,7 @@ namespace NL_SUMMARY_TOOL
             var ofd = new OpenFileDialog
             {
                 Filter = "Excelファイル(*.xlsx)|*.xlsx|すべてのファイル(*.*)|*.*",
-                Title = "NLMAX出力(外注)ファイルを選択してください",
+                Title = "ファイルを選択してください",
                 InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)
             };
             //ダイアログ表示→OKならテキストボックス1へファイルパスをセット
